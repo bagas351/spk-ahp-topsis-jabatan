@@ -1,6 +1,6 @@
 <?php
 require_once 'functions.php';
-
+$PERIODE = get('periode');
 if ($act == 'login') {
     $user = esc_field($_POST['user']);
     $pass = esc_field($_POST['pass']);
@@ -78,10 +78,10 @@ elseif ($mod == 'kriteria_tambah') {
         print_msg("Kode sudah ada!");
     else {
         $db->query("INSERT INTO tb_kriteria (tahun, kode_kriteria, nama_kriteria) VALUES ('$PERIODE', '$kode', '$nama')");
-        $db->query("INSERT INTO tb_rel_kriteria(tahun, ID1, ID2, nilai) SELECT '$PERIODE', '$kode', kode_kriteria, 1 FROM tb_kriteria");
-        $db->query("INSERT INTO tb_rel_kriteria(tahun, ID1, ID2, nilai) SELECT '$PERIODE', kode_kriteria, '$kode', 1 FROM tb_kriteria WHERE kode_kriteria<>'$kode'");
+        $db->query("INSERT INTO tb_rel_kriteria(tahun, ID1, ID2, nilai) SELECT '$PERIODE', '$kode', kode_kriteria, 1 FROM tb_kriteria where tahun = '$PERIODE'");
+        $db->query("INSERT INTO tb_rel_kriteria(tahun, ID1, ID2, nilai) SELECT '$PERIODE', kode_kriteria, '$kode', 1 FROM tb_kriteria WHERE kode_kriteria<>'$kode' and tahun = '$PERIODE'");
 
-        $db->query("INSERT INTO tb_rel_alternatif(tahun, kode_alternatif, kode_kriteria, nilai) SELECT '$PERIODE', kode_alternatif, '$kode', 0  FROM tb_alternatif");
+        $db->query("INSERT INTO tb_rel_alternatif(tahun, kode_alternatif, kode_kriteria, nilai) SELECT '$PERIODE', kode_alternatif, '$kode', 0  FROM tb_alternatif where tahun = '$PERIODE'");
 
         redirect_js("index.php?m=kriteria&periode=$PERIODE");
     }
@@ -95,14 +95,14 @@ elseif ($mod == 'kriteria_tambah') {
     elseif ($db->get_results("SELECT * FROM tb_kriteria WHERE kode_kriteria='$kode' and tahun = '$PERIODE' AND kode_kriteria<>'" . get('ID') . "'"))
         print_msg("Kode sudah ada!");
     else {
-        $db->query("UPDATE tb_kriteria SET kode_kriteria='$kode', nama_kriteria='$nama', atribut='$atribut' WHERE kode_kriteria='" . get('ID') . "'");
+        $db->query("UPDATE tb_kriteria SET kode_kriteria='$kode', nama_kriteria='$nama', atribut='$atribut' WHERE kode_kriteria='" . get('ID') . "' and tahun = '$PERIODE'");
         redirect_js("index.php?m=kriteria");
     }
 } else if ($act == 'kriteria_hapus') {
     $db->query("DELETE FROM tb_kriteria WHERE kode_kriteria='" . get('ID') . "' and tahun = '$PERIODE'");
     $db->query("DELETE FROM tb_rel_kriteria WHERE ID1='" . get('ID') . "' OR ID2='" . get('ID') . "' and tahun = '$PERIODE'");
     $db->query("DELETE FROM tb_rel_alternatif WHERE kode_kriteria='" . get('ID') . "' and tahun = '$PERIODE'");
-    header("location:index.php?m=kriteria");
+    header("location:index.php?m=kriteria&periode=$PERIODE");
 }
 
 /** CRIPS */
@@ -149,8 +149,8 @@ else if ($mod == 'rel_kriteria') {
     if ($ID1 == $ID2 && $nilai <> 1)
         print_msg("Kriteria yang sama harus bernilai 1.");
     else {
-        $db->query("UPDATE tb_rel_kriteria SET nilai=$nilai WHERE ID1='$ID1' AND ID2='$ID2'");
-        $db->query("UPDATE tb_rel_kriteria SET nilai=1/$nilai WHERE ID2='$ID1' AND ID1='$ID2'");
+        $db->query("UPDATE tb_rel_kriteria SET nilai=$nilai WHERE ID1='$ID1' AND ID2='$ID2' and tahun = '$PERIODE'");
+        $db->query("UPDATE tb_rel_kriteria SET nilai=1/$nilai WHERE ID2='$ID1' AND ID1='$ID2' and tahun = '$PERIODE'");
         print_msg("Nilai kriteria berhasil diubah.", 'success');
     }
 }

@@ -1,5 +1,5 @@
 <?php
-$row = $db->get_row("SELECT * FROM tb_kriteria WHERE kode_kriteria='" . get('ID') . "'");
+$row = $db->get_row("SELECT * FROM tb_kriteria WHERE kode_kriteria='" . get('ID') . "' and tahun = '$PERIODE'");
 ?>
 <div class="page-header">
     <h1>Ubah kriteria</h1>

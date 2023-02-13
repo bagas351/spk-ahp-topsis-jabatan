@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2023 at 09:02 AM
+-- Generation Time: Feb 13, 2023 at 10:07 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tb_alternatif` (
   `kode_alternatif` varchar(16) NOT NULL,
-  `tahun` year(4) DEFAULT NULL,
+  `tahun` year(4) NOT NULL,
   `nama_alternatif` varchar(256) NOT NULL DEFAULT '',
   `Jabatan` varchar(256) NOT NULL DEFAULT '',
   `total` double NOT NULL,
@@ -52,7 +52,7 @@ INSERT INTO `tb_alternatif` (`kode_alternatif`, `tahun`, `nama_alternatif`, `Jab
 
 CREATE TABLE `tb_kriteria` (
   `kode_kriteria` varchar(16) NOT NULL,
-  `tahun` year(4) DEFAULT NULL,
+  `tahun` year(4) NOT NULL,
   `nama_kriteria` varchar(256) NOT NULL,
   `atribut` varchar(256) NOT NULL DEFAULT 'benefit'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -66,7 +66,12 @@ INSERT INTO `tb_kriteria` (`kode_kriteria`, `tahun`, `nama_kriteria`, `atribut`)
 ('C3', 2024, 'Komunikasi', 'benefit'),
 ('C4', 2024, 'Masa Kerja', 'cost'),
 ('C5', 2024, 'pengalaman', 'benefit'),
-('C1', 2024, 'Pendidikan', 'benefit');
+('C1', 2024, 'Pendidikan', 'benefit'),
+('TT', 2025, 'TTTT', 'benefit'),
+('TI', 2025, 'TITI', 'benefit'),
+('PA', 2025, 'PAPA', 'benefit'),
+('PU', 2025, 'PU pu', 'benefit'),
+('PG', 2025, 'PGPG', 'benefit');
 
 -- --------------------------------------------------------
 
@@ -85,8 +90,8 @@ CREATE TABLE `tb_periode` (
 --
 
 INSERT INTO `tb_periode` (`tahun`, `nama`, `keterangan`) VALUES
-(2024, '2024 - 2025', ''),
-(2025, '2025 - 2026', '124d');
+(2024, '2024-2025', 'Ket'),
+(2025, '2025-2026', 'hihi');
 
 -- --------------------------------------------------------
 
@@ -196,7 +201,32 @@ INSERT INTO `tb_rel_kriteria` (`ID`, `tahun`, `ID1`, `ID2`, `nilai`) VALUES
 (532, 2024, 'C2', 'C2', 1),
 (530, 2024, 'C1', 'C1', 1),
 (547, 2024, 'C5', 'C2', 0.2),
-(531, 2024, 'C2', 'C1', 1);
+(531, 2024, 'C2', 'C1', 1),
+(726, 2025, 'TI', 'PA', 1),
+(727, 2025, 'TI', 'PU', 1),
+(728, 2025, 'TI', 'TI', 1),
+(729, 2025, 'TI', 'TT', 1),
+(730, 2025, 'PA', 'TI', 1),
+(731, 2025, 'PU', 'TI', 1),
+(732, 2025, 'TT', 'TI', 1),
+(733, 2025, 'PG', 'PA', 0.5),
+(734, 2025, 'PG', 'PG', 1),
+(735, 2025, 'PG', 'PU', 1),
+(736, 2025, 'PG', 'TI', 1),
+(737, 2025, 'PG', 'TT', 1),
+(738, 2025, 'PA', 'PG', 2),
+(739, 2025, 'PU', 'PG', 1),
+(740, 2025, 'TI', 'PG', 1),
+(741, 2025, 'TT', 'PG', 1),
+(724, 2025, 'PA', 'TT', 1),
+(725, 2025, 'PU', 'TT', 1),
+(723, 2025, 'TT', 'TT', 1),
+(722, 2025, 'TT', 'PU', 1),
+(717, 2025, 'PU', 'PU', 1),
+(718, 2025, 'PA', 'PA', 1),
+(719, 2025, 'PA', 'PU', 5),
+(720, 2025, 'PU', 'PA', 0.2),
+(721, 2025, 'TT', 'PA', 1);
 
 -- --------------------------------------------------------
 
@@ -224,13 +254,13 @@ INSERT INTO `tb_user` (`user`, `pass`) VALUES
 -- Indexes for table `tb_alternatif`
 --
 ALTER TABLE `tb_alternatif`
-  ADD PRIMARY KEY (`kode_alternatif`);
+  ADD PRIMARY KEY (`kode_alternatif`,`tahun`);
 
 --
 -- Indexes for table `tb_kriteria`
 --
 ALTER TABLE `tb_kriteria`
-  ADD PRIMARY KEY (`kode_kriteria`);
+  ADD PRIMARY KEY (`kode_kriteria`,`tahun`);
 
 --
 -- Indexes for table `tb_periode`
@@ -258,11 +288,11 @@ ALTER TABLE `tb_rel_kriteria`
 -- AUTO_INCREMENT for table `tb_rel_alternatif`
 --
 ALTER TABLE `tb_rel_alternatif`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=509;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=565;
 
 --
 -- AUTO_INCREMENT for table `tb_rel_kriteria`
 --
 ALTER TABLE `tb_rel_kriteria`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=588;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=742;
 COMMIT;

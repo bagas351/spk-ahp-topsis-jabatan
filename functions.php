@@ -29,12 +29,12 @@ $nRI = array(
     15 => 1.59
 );
 
-$rows = $db->get_results("SELECT kode_alternatif, nama_alternatif FROM tb_alternatif ORDER BY kode_alternatif");
+$rows = $db->get_results("SELECT kode_alternatif, nama_alternatif FROM tb_alternatif where tahun = '" . get('periode') . "' ORDER BY kode_alternatif");
 foreach ($rows as $row) {
     $ALTERNATIF[$row->kode_alternatif] = $row->nama_alternatif;
 }
 
-$rows = $db->get_results("SELECT kode_kriteria, nama_kriteria, atribut FROM tb_kriteria ORDER BY kode_kriteria");
+$rows = $db->get_results("SELECT kode_kriteria, nama_kriteria, atribut FROM tb_kriteria where tahun = '" . get('periode') . "' ORDER BY kode_kriteria");
 foreach ($rows as $row) {
     $KRITERIA[$row->kode_kriteria] = array(
         'nama_kriteria' => $row->nama_kriteria,

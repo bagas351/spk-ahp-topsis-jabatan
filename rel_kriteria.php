@@ -22,6 +22,7 @@ if ($_POST) include 'aksi.php';
 
 $rows = $db->get_results("SELECT k.nama_kriteria, rk.ID1, rk.ID2, nilai 
     FROM tb_rel_kriteria rk INNER JOIN tb_kriteria k ON k.kode_kriteria=rk.ID1 
+    where rk.tahun = '$PERIODE'
     ORDER BY ID1, ID2");
 $criterias = array();
 $data = array();
@@ -32,7 +33,7 @@ foreach ($rows as $row) {
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <form class="form-inline" action="?m=rel_kriteria" method="post">
+        <form class="form-inline" action="?m=rel_kriteria&periode=<?= get('periode') ?>" method="post">
             <div class="form-group">
                 <select class="form-control" name="ID1">
                     <?= get_kriteria_option(post('ID1')) ?>
