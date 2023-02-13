@@ -45,10 +45,10 @@ if (empty($_SESSION['login']))
               <li class="<?= isActive('rel_kriteria') ?>"><a href="?m=rel_kriteria&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-th-list"></span> Nilai bobot kriteria</a></li>
             </ul>
           </li>
-          <li class="<?= isActive(['alternatif', 'rel_alternatif']) ?>" class="dropdown">
+          <li class="<?= isActive(['alternatif', 'rel_alternatif', 'alternatif_tambah', 'alternatif_ubah']) ?>" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Alternatif <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li class="<?= isActive('alternatif') ?>"><a href="?m=alternatif&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-user"></span> Alternatif</a></li>
+              <li class="<?= isActive(['alternatif', 'alternatif_tambah', 'alternatif_ubah']) ?>"><a href="?m=alternatif&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-user"></span> Alternatif</a></li>
               <li class="<?= isActive('rel_alternatif') ?>"><a href="?m=rel_alternatif&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-signal"></span> Nilai bobot alternatif</a></li>
             </ul>
           </li>
