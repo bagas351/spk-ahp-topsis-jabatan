@@ -1,0 +1,4 @@
+<div class="page-header">
+	<h1>SPK Metode AHP dan TOPSIS</h1>
+</div>
+<p>Website ini menggunakan dua metode pendukung keputusan AHP dan TOPSIS yang didasarkan pada konsep bahwa alternative yang terbaik tidak hanya memiliki jarak terpendek dari solusi ideal positif tetapi juga memiliki jarak terpanjang dari solusi ideal negatif yang dalam hal ini dapat memberikan rekomendasi penentuan promosi jabatan di PT. HM SAMPOERNA CILACAP yang sesuai dengan yang diharapkan. Sedangkan metode AHP merupakan metode yang banyak digunakan dalam kasus pembobotan kriteria dan penentuan prioritas setiap kriteria. Alasan penggunaan metode AHP ini karena didalam AHP terdapat konsep eigenvector yaitu digunakan untuk melakukan proses perangkingan prioritas setiap kriteria berdasarkan matriks perbandingan berpasangan.   .</p>
