@@ -21,6 +21,7 @@
     <div class="panel-heading">
         <form class="form-inline">
             <input type="hidden" name="m" value="kriteria" />
+            <input type="hidden" name="periode" value="<?= get('periode') ?>" />
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Pencarian. . ." name="q" value="<?= get('q') ?>" />
             </div>
@@ -28,10 +29,10 @@
                 <button class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
             </div>
             <div class="form-group">
-                <a class="btn btn-primary" href="?m=kriteria_tambah"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
+                <a class="btn btn-primary" href="?m=kriteria_tambah&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
             </div>
             <div class="form-group">
-                <a class="btn btn-default" target="_blank" href="cetak.php?m=kriteria"><span class="glyphicon glyphicon-print"></span> Cetak</a>
+                <a class="btn btn-default" target="_blank" href="cetak.php?m=kriteria&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-print"></span> Cetak</a>
             </div>
         </form>
     </div>
@@ -47,7 +48,7 @@
             </thead>
             <?php
             $q = esc_field(get('q'));
-            $rows = $db->get_results("SELECT * FROM tb_kriteria WHERE nama_kriteria LIKE '%$q%' ORDER BY kode_kriteria");
+            $rows = $db->get_results("SELECT * FROM tb_kriteria WHERE nama_kriteria LIKE '%$q%' and tahun = '$PERIODE' ORDER BY kode_kriteria");
             $no = 0;
             foreach ($rows as $row) : ?>
                 <tr>
@@ -55,8 +56,8 @@
                     <td><?= $row->nama_kriteria ?></td>
                     <td><?= $row->atribut ?></td>
                     <td>
-                        <a class="btn btn-xs btn-warning" href="?m=kriteria_ubah&ID=<?= $row->kode_kriteria ?>"><span class="glyphicon glyphicon-edit"></span></a>
-                        <a class="btn btn-xs btn-danger" href="aksi.php?act=kriteria_hapus&ID=<?= $row->kode_kriteria ?>" onclick="return confirm('Hapus data?')"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a class="btn btn-xs btn-warning" href="?m=kriteria_ubah&ID=<?= $row->kode_kriteria ?>&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a class="btn btn-xs btn-danger" href="aksi.php?act=kriteria_hapus&ID=<?= $row->kode_kriteria ?>" onclick="return confirm('Hapus data?')&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
             <?php endforeach; ?>

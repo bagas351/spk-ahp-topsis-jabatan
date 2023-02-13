@@ -38,10 +38,10 @@ if (empty($_SESSION['login']))
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="<?= isActive(['periode', 'periode_tambah']) ?>" class="?m=periode"><a href="?m=periode&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-list-alt"></span> Periode</a></li>
-          <li class="<?= isActive(['kriteria', 'rel_kriteria']) ?>" class="dropdown">
+          <li class="<?= isActive(['kriteria', 'rel_kriteria', 'kriteria_tambah', 'kriteria_ubah']) ?>" class="dropdown">
             <a href="?m=kriteria&periode=<?= get('periode') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-th-large"></span> Kriteria <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li class="<?= isActive('kriteria') ?>"><a href="?m=kriteria&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-th-large"></span> Kriteria</a></li>
+              <li class="<?= isActive(['kriteria', 'kriteria_tambah', 'kriteria_ubah']) ?>"><a href="?m=kriteria&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-th-large"></span> Kriteria</a></li>
               <li class="<?= isActive('rel_kriteria') ?>"><a href="?m=rel_kriteria&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-th-list"></span> Nilai bobot kriteria</a></li>
             </ul>
           </li>
@@ -64,22 +64,37 @@ if (empty($_SESSION['login']))
   <div class="container">
     <?php
     if (file_exists($mod . '.php')) {
-      // cek periode
-      if (is_null(get('periode'))) {
-        $row = $db->get_row("SELECT * FROM tb_periode order by tahun desc limit 1");
-        redirect_js("index.php?m=$mod&periode=$row->tahun");
-        die;
+      if (!in_array($mod, ['periode', 'periode_cetak', 'periode_tambah', 'periode_ubah'])) {
+        // cek periode
+        if (is_null(get('periode'))) {
+          $row = $db->get_row("SELECT * FROM tb_periode order by tahun desc limit 1");
+          if (is_null($row)) {
+            // jika periode belum ada
+            redirect_js("index.php?m=periode");
+          } else {
+            // lempar jika periode tidak valid ke periode terbaru
+            redirect_js("index.php?m=$mod&periode=$row->tahun");
+          }
+          die;
+        }
+
+        // jika parameter periode ada
+        $row = $db->get_row("SELECT * FROM tb_periode WHERE tahun='" . get('periode') . "'");
+        if (is_null($row)) {
+          // jika periode tidak valid
+          $row = $db->get_row("SELECT * FROM tb_periode order by tahun desc limit 1");
+
+          if (is_null($row)) {
+            // jika periode belum ada
+            redirect_js("index.php?m=periode");
+          } else {
+            // lempar jika periode tidak valid ke periode terbaru
+            redirect_js("index.php?m=$mod&periode=$row->tahun");
+          }
+        }
       }
 
-      $row = $db->get_row("SELECT * FROM tb_periode WHERE tahun='" . get('periode') . "'");
-      if (is_null($row)) {
-        echo <<<HTML
-          <div class="page-header">
-              <h1>Periode Tidak Ditemukan</h1>
-          </div>
-        HTML;
-        die;
-      }
+      $PERIODE = get('periode');
       include $mod . '.php';
     } else {
       include 'home.php';

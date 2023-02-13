@@ -74,16 +74,16 @@ elseif ($mod == 'kriteria_tambah') {
 
     if ($kode == '' || $nama == '' || $atribut == '')
         print_msg("Field bertanda * tidak boleh kosong!");
-    elseif ($db->get_results("SELECT * FROM tb_kriteria WHERE kode_kriteria='$kode'"))
+    elseif ($db->get_results("SELECT * FROM tb_kriteria WHERE kode_kriteria='$kode' and tahun = '$PERIODE'"))
         print_msg("Kode sudah ada!");
     else {
-        $db->query("INSERT INTO tb_kriteria (kode_kriteria, nama_kriteria) VALUES ('$kode', '$nama')");
-        $db->query("INSERT INTO tb_rel_kriteria(ID1, ID2, nilai) SELECT '$kode', kode_kriteria, 1 FROM tb_kriteria");
-        $db->query("INSERT INTO tb_rel_kriteria(ID1, ID2, nilai) SELECT kode_kriteria, '$kode', 1 FROM tb_kriteria WHERE kode_kriteria<>'$kode'");
+        $db->query("INSERT INTO tb_kriteria (tahun, kode_kriteria, nama_kriteria) VALUES ('$PERIODE', '$kode', '$nama')");
+        $db->query("INSERT INTO tb_rel_kriteria(tahun, ID1, ID2, nilai) SELECT '$PERIODE', '$kode', kode_kriteria, 1 FROM tb_kriteria");
+        $db->query("INSERT INTO tb_rel_kriteria(tahun, ID1, ID2, nilai) SELECT '$PERIODE', kode_kriteria, '$kode', 1 FROM tb_kriteria WHERE kode_kriteria<>'$kode'");
 
-        $db->query("INSERT INTO tb_rel_alternatif(kode_alternatif, kode_kriteria, nilai) SELECT kode_alternatif, '$kode', -1  FROM tb_alternatif");
+        $db->query("INSERT INTO tb_rel_alternatif(tahun, kode_alternatif, kode_kriteria, nilai) SELECT '$PERIODE', kode_alternatif, '$kode', 0  FROM tb_alternatif");
 
-        redirect_js("index.php?m=kriteria");
+        redirect_js("index.php?m=kriteria&periode=$PERIODE");
     }
 } else if ($mod == 'kriteria_ubah') {
     $kode = $_POST['kode'];
@@ -92,16 +92,16 @@ elseif ($mod == 'kriteria_tambah') {
 
     if ($kode == '' || $nama == '' || $atribut == '')
         print_msg("Field bertanda * tidak boleh kosong!");
-    elseif ($db->get_results("SELECT * FROM tb_kriteria WHERE kode_kriteria='$kode' AND kode_kriteria<>'" . get('ID') . "'"))
+    elseif ($db->get_results("SELECT * FROM tb_kriteria WHERE kode_kriteria='$kode' and tahun = '$PERIODE' AND kode_kriteria<>'" . get('ID') . "'"))
         print_msg("Kode sudah ada!");
     else {
         $db->query("UPDATE tb_kriteria SET kode_kriteria='$kode', nama_kriteria='$nama', atribut='$atribut' WHERE kode_kriteria='" . get('ID') . "'");
         redirect_js("index.php?m=kriteria");
     }
 } else if ($act == 'kriteria_hapus') {
-    $db->query("DELETE FROM tb_kriteria WHERE kode_kriteria='" . get('ID') . "'");
-    $db->query("DELETE FROM tb_rel_kriteria WHERE ID1='" . get('ID') . "' OR ID2='" . get('ID') . "'");
-    $db->query("DELETE FROM tb_rel_alternatif WHERE kode_kriteria='" . get('ID') . "'");
+    $db->query("DELETE FROM tb_kriteria WHERE kode_kriteria='" . get('ID') . "' and tahun = '$PERIODE'");
+    $db->query("DELETE FROM tb_rel_kriteria WHERE ID1='" . get('ID') . "' OR ID2='" . get('ID') . "' and tahun = '$PERIODE'");
+    $db->query("DELETE FROM tb_rel_alternatif WHERE kode_kriteria='" . get('ID') . "' and tahun = '$PERIODE'");
     header("location:index.php?m=kriteria");
 }
 

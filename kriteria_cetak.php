@@ -9,7 +9,7 @@
     </thead>
     <?php
     $q = esc_field(get('q'));
-    $rows = $db->get_results("SELECT * FROM tb_kriteria WHERE nama_kriteria LIKE '%$q%' ORDER BY kode_kriteria");
+    $rows = $db->get_results("SELECT * FROM tb_kriteria WHERE nama_kriteria LIKE '%$q%' and tahun = '$PERIODE' ORDER BY kode_kriteria");
     $no = 0;
     foreach ($rows as $row) : ?>
         <tr>
