@@ -41,7 +41,7 @@
                 <tr>
                     <th>No</th>
                     <th>Kode</th>
-                    <th>Nama Alternatif</th>
+                    <th>Nama Kandidat</th>
                     <th>Jabatan</th>
                     <th>Aksi</th>
                 </tr>
