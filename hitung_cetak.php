@@ -19,7 +19,7 @@
             <td><?= $row->rank ?></td>
             <td><?= $row->kode_alternatif ?></td>
             <td><?= $row->nama_alternatif ?></td>
-            <td><?= $row->Jabatan ?></td>
+            <td><?= $row->jabatan ?></td>
             <td><?= $row->total ?></td>
         </tr>
     <?php endforeach; ?>

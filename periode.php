@@ -6,7 +6,7 @@
         <form class="form-inline">
             <input type="hidden" name="m" value="periode" />
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Pencarian. . ." name="q" value="<?= get('q') ?>" />
+                <input class="form-control" type="search" placeholder="Pencarian. . ." name="q" value="<?= get('q') ?>" />
             </div>
             <div class="form-group">
                 <button class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>

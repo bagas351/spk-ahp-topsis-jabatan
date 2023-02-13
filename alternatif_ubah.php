@@ -18,7 +18,7 @@ $row = $db->get_row("SELECT * FROM tb_alternatif WHERE kode_alternatif='" . get(
             </div>
             <div class="form-group">
                 <label>Jabatan</label>
-                <textarea class="form-control" name="Jabatan"><?= $row->Jabatan ?></textarea>
+                <textarea class="form-control" name="jabatan"><?= $row->jabatan ?></textarea>
             </div>
             <div class="page-header">
                 <button class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Simpan</button>

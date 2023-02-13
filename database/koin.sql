@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2023 at 10:07 AM
+-- Generation Time: Feb 13, 2023 at 10:35 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -25,7 +25,7 @@ CREATE TABLE `tb_alternatif` (
   `kode_alternatif` varchar(16) NOT NULL,
   `tahun` year(4) NOT NULL,
   `nama_alternatif` varchar(256) NOT NULL DEFAULT '',
-  `Jabatan` varchar(256) NOT NULL DEFAULT '',
+  `jabatan` varchar(256) NOT NULL DEFAULT '',
   `total` double NOT NULL,
   `rank` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -34,15 +34,18 @@ CREATE TABLE `tb_alternatif` (
 -- Dumping data for table `tb_alternatif`
 --
 
-INSERT INTO `tb_alternatif` (`kode_alternatif`, `tahun`, `nama_alternatif`, `Jabatan`, `total`, `rank`) VALUES
+INSERT INTO `tb_alternatif` (`kode_alternatif`, `tahun`, `nama_alternatif`, `jabatan`, `total`, `rank`) VALUES
 ('A4', 2024, 'Pigus Haryanto', '', 0.44498241554123, 6),
 ('A5', 2024, 'Mubasyir Mustafa', '', 0.55562479920148, 3),
 ('K1', 2024, 'Gunawan', '', 0.43636841215278, 7),
-('A2', 2024, 'Apriyanto Pamungkas', '', 0.50399837453274, 4),
-('A3', 2024, 'Nopi Pratomo', '', 0.45788663123249, 5),
-('A1', 2024, 'Asep Kurnia', '', 0.87814961732074, 2),
+('A2', 2024, 'Apriyanto Pamungkas', 'a', 0.50399837453274, 4),
+('A3', 2024, 'Nopi Pratomo', 'b', 0.45788663123249, 5),
+('A1', 2024, 'Asep Kurnia', 'a', 0.87814961732074, 2),
 ('K2', 2024, 'Gunawansyah', '', 0.39301552100718, 8),
-('K3', 2024, 'Teguh', '', 0.89217894354515, 1);
+('K3', 2024, 'Teguh', '', 0.89217894354515, 1),
+('AG', 2025, 'Agus Suheri', 'Kepala Sekolah', 0, 0),
+('BS', 2025, 'Bambang Sugiarto', 'Dosen', 0, 0),
+('RF', 2025, 'Riffa Haviani Laluma', 'Staff', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -156,7 +159,22 @@ INSERT INTO `tb_rel_alternatif` (`ID`, `tahun`, `kode_alternatif`, `kode_kriteri
 (448, 2024, 'K2', 'C1', 8),
 (417, 2024, 'A4', 'C1', 8),
 (392, 2024, 'A1', 'C1', 8),
-(393, 2024, 'A1', 'C2', 9);
+(393, 2024, 'A1', 'C2', 9),
+(572, 2025, 'BS', 'PU', 0),
+(571, 2025, 'BS', 'PG', 0),
+(570, 2025, 'BS', 'PA', 0),
+(569, 2025, 'AG', 'TT', 0),
+(568, 2025, 'AG', 'TI', 0),
+(567, 2025, 'AG', 'PU', 0),
+(566, 2025, 'AG', 'PG', 0),
+(565, 2025, 'AG', 'PA', 0),
+(579, 2025, 'RF', 'TT', 0),
+(578, 2025, 'RF', 'TI', 0),
+(577, 2025, 'RF', 'PU', 0),
+(576, 2025, 'RF', 'PG', 0),
+(575, 2025, 'RF', 'PA', 0),
+(574, 2025, 'BS', 'TT', 0),
+(573, 2025, 'BS', 'TI', 0);
 
 -- --------------------------------------------------------
 
@@ -288,7 +306,7 @@ ALTER TABLE `tb_rel_kriteria`
 -- AUTO_INCREMENT for table `tb_rel_alternatif`
 --
 ALTER TABLE `tb_rel_alternatif`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=565;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=580;
 
 --
 -- AUTO_INCREMENT for table `tb_rel_kriteria`

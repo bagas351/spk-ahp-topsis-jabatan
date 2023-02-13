@@ -39,31 +39,30 @@ if ($act == 'login') {
 elseif ($mod == 'alternatif_tambah') {
     $kode = $_POST['kode'];
     $nama = $_POST['nama'];
-    $Jabatan = $_POST['jabatan'];
+    $jabatan = $_POST['jabatan'];
     if ($kode == '' || $nama == '')
         print_msg("Field yang bertanda * tidak boleh kosong!");
-    elseif ($db->get_results("SELECT * FROM tb_alternatif WHERE kode_alternatif='$kode'"))
+    elseif ($db->get_results("SELECT * FROM tb_alternatif WHERE kode_alternatif='$kode' and tahun = '$PERIODE'"))
         print_msg("Kode sudah ada!");
     else {
-        $db->query("INSERT INTO tb_alternatif (kode_alternatif, nama_alternatif, Jabatan) VALUES ('$kode', '$nama', '$Jabatan')");
-
-        $db->query("INSERT INTO tb_rel_alternatif(kode_alternatif, kode_kriteria, nilai) SELECT '$kode', kode_kriteria, 0 FROM tb_kriteria");
-        redirect_js("index.php?m=alternatif");
+        $db->query("INSERT INTO tb_alternatif (tahun, kode_alternatif, nama_alternatif, jabatan) VALUES ('$PERIODE', '$kode', '$nama', '$jabatan')");
+        $db->query("INSERT INTO tb_rel_alternatif(tahun, kode_alternatif, kode_kriteria, nilai) SELECT '$PERIODE', '$kode', kode_kriteria, 0 FROM tb_kriteria where tahun = '$PERIODE'");
+        redirect_js("index.php?m=alternatif&periode=$PERIODE");
     }
 } else if ($mod == 'alternatif_ubah') {
     $kode = $_POST['kode'];
     $nama = $_POST['nama'];
-    $Jabatan = $_POST['Jabatan'];
+    $jabatan = $_POST['jabatan'];
     if ($kode == '' || $nama == '')
         print_msg("Field yang bertanda * tidak boleh kosong!");
     else {
-        $db->query("UPDATE tb_alternatif SET nama_alternatif='$nama', Jabatan='$Jabatan' WHERE kode_alternatif='" . get('ID') . "'");
-        redirect_js("index.php?m=alternatif");
+        $db->query("UPDATE tb_alternatif SET nama_alternatif='$nama', jabatan='$jabatan' WHERE tahun = '$PERIODE' and kode_alternatif='" . get('ID') . "'");
+        redirect_js("index.php?m=alternatif&periode=$PERIODE");
     }
 } else if ($act == 'alternatif_hapus') {
-    $db->query("DELETE FROM tb_alternatif WHERE kode_alternatif='" . get('ID') . "'");
-    $db->query("DELETE FROM tb_rel_alternatif WHERE kode_alternatif='" . get('ID') . "'");
-    header("location:index.php?m=alternatif");
+    $db->query("DELETE FROM tb_alternatif WHERE tahun = '$PERIODE' and kode_alternatif='" . get('ID') . "'");
+    $db->query("DELETE FROM tb_rel_alternatif WHERE tahun = '$PERIODE' and kode_alternatif='" . get('ID') . "'");
+    header("location:index.php?m=alternatif&periode=$PERIODE");
 }
 
 /** KRITERIA */
@@ -96,7 +95,7 @@ elseif ($mod == 'kriteria_tambah') {
         print_msg("Kode sudah ada!");
     else {
         $db->query("UPDATE tb_kriteria SET kode_kriteria='$kode', nama_kriteria='$nama', atribut='$atribut' WHERE kode_kriteria='" . get('ID') . "' and tahun = '$PERIODE'");
-        redirect_js("index.php?m=kriteria");
+        redirect_js("index.php?m=kriteria&periode=$PERIODE");
     }
 } else if ($act == 'kriteria_hapus') {
     $db->query("DELETE FROM tb_kriteria WHERE kode_kriteria='" . get('ID') . "' and tahun = '$PERIODE'");
@@ -108,22 +107,22 @@ elseif ($mod == 'kriteria_tambah') {
 /** CRIPS */
 elseif ($mod == 'crips_tambah') {
     $nilai = $_POST['nilai'];
-    $Jabatan = $_POST['Jabatan'];
+    $jabatan = $_POST['jabatan'];
 
-    if ($nilai == '' || $Jabatan == '')
+    if ($nilai == '' || $jabatan == '')
         print_msg("Nilai dan nama tidak boleh kosong!");
     else {
-        $db->query("INSERT INTO tb_crips (kode_kriteria, nilai, Jabatan) VALUES ('$_POST[kode_kriteria]', '$nilai', '$Jabatan')");
+        $db->query("INSERT INTO tb_crips (kode_kriteria, nilai, jabatan) VALUES ('$_POST[kode_kriteria]', '$nilai', '$jabatan')");
         redirect_js("index.php?m=crips&kode_kriteria=" . get('kode_kriteria'));
     }
 } else if ($mod == 'crips_ubah') {
     $nilai = $_POST['nilai'];
-    $Jabatan = $_POST['Jabatan'];
+    $jabatan = $_POST['jabatan'];
 
-    if ($nilai == '' || $Jabatan == '')
+    if ($nilai == '' || $jabatan == '')
         print_msg("Nilai dan nama tidak boleh kosong!");
     else {
-        $db->query("UPDATE tb_crips SET nilai='$nilai', Jabatan='$Jabatan' WHERE kode_crips='" . get('ID') . "'");
+        $db->query("UPDATE tb_crips SET nilai='$nilai', jabatan='$jabatan' WHERE kode_crips='" . get('ID') . "'");
         redirect_js("index.php?m=crips&kode_kriteria=" . get('kode_kriteria'));
     }
 } else if ($act == 'crips_hapus') {

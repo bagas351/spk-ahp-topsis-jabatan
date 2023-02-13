@@ -1,5 +1,6 @@
 <div class="page-header">
     <h1>Tambah Alternatif</h1>
+    <small>Periode <?= get('periode') ?></small>
 </div>
 <div class="row">
     <div class="col-sm-6">
@@ -19,7 +20,7 @@
             </div>
             <div class="form-group">
                 <button class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Simpan</button>
-                <a class="btn btn-danger" href="?m=alternatif"><span class="glyphicon glyphicon-arrow-left"></span> Kembali</a>
+                <a class="btn btn-danger" href="?m=alternatif&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-arrow-left"></span> Kembali</a>
             </div>
         </form>
     </div>
