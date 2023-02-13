@@ -23,7 +23,8 @@
     </form>
 </div>
 <?php
-$c = $db->get_results("SELECT * FROM tb_rel_alternatif WHERE nilai>0");
+$c = $db->get_results("SELECT * FROM tb_rel_alternatif WHERE nilai>0 and tahun=$PERIODE");
+$ALTERNATIF = isset($ALTERNATIF) ? $ALTERNATIF : null;
 if (!$ALTERNATIF || !$KRITERIA) :
     echo "Tampaknya anda belum mengatur alternatif dan kriteria. Silahkan tambahkan minimal 3 alternatif dan 3 kriteria.";
 elseif (!$c) :
@@ -364,7 +365,7 @@ else :
                         ?>
                     </table>
                     <div class="form-group">
-                        <a class="btn btn-default" target="_blank" href="cetak.php?m=hitung"><span class="glyphicon glyphicon-print"></span> Cetak</a>
+                        <a class="btn btn-default" target="_blank" href="cetak.php?m=hitung&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-print"></span> Cetak</a>
                     </div>
                 </div>
             </div>

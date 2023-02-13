@@ -21,6 +21,7 @@
     <div class="panel-heading">
         <form class="form-inline">
             <input type="hidden" name="m" value="rel_alternatif" />
+            <input type="hidden" name="periode" value="<?= get('periode') ?>" />
             <div class="form-group">
                 <input class="form-control" type="text" name="q" value="<?= get('q') ?>" placeholder="Pencarian" />
             </div>
@@ -36,7 +37,7 @@
                     <th>Kode</th>
                     <th>Nama Kandidat</th>
                     <?php
-                    $heads = $db->get_var("SELECT COUNT(*) FROM tb_kriteria");
+                    $heads = $db->get_var("SELECT COUNT(*) FROM tb_kriteria where tahun = $PERIODE");
                     if ($heads > 0) :
                         for ($a = 1; $a <= $heads; $a++) {
                             echo "<th>C$a</th>";
@@ -51,7 +52,7 @@
 
                 $q = is_null(get('q')) ? '' :  get('q');
 
-                $rows = $db->get_results("SELECT * FROM tb_alternatif WHERE nama_alternatif LIKE '%$q%' ORDER BY kode_alternatif");
+                $rows = $db->get_results("SELECT * FROM tb_alternatif WHERE nama_alternatif LIKE '%$q%' and tahun = $PERIODE ORDER BY kode_alternatif");
                 $data = TOPSIS_get_hasil_analisa();
 
                 $no = 0;
@@ -64,7 +65,7 @@
                             <td><?= $val ?></td>
                         <?php endforeach ?>
                         <td>
-                            <a class="btn btn-xs btn-warning" href="?m=rel_alternatif_ubah&ID=<?= $row->kode_alternatif ?>"><span class="glyphicon glyphicon-edit"></span> Ubah</a>
+                            <a class="btn btn-xs btn-warning" href="?m=rel_alternatif_ubah&ID=<?= $row->kode_alternatif ?>&periode=<?= get('periode') ?>"><span class="glyphicon glyphicon-edit"></span> Ubah</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

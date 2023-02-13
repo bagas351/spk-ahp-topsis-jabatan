@@ -134,9 +134,9 @@ elseif ($mod == 'crips_tambah') {
 else if ($mod == 'rel_alternatif_ubah') {
     foreach ($_POST as $key => $value) {
         $ID = str_replace('ID-', '', $key);
-        $db->query("UPDATE tb_rel_alternatif SET nilai='$value' WHERE ID='$ID'");
+        $db->query("UPDATE tb_rel_alternatif SET nilai='$value' WHERE ID='$ID' and tahun=$PERIODE");
     }
-    redirect_js("index.php?m=rel_alternatif");
+    redirect_js("index.php?m=rel_alternatif&periode=$PERIODE");
 }
 
 /** RELASI KRITERIA */

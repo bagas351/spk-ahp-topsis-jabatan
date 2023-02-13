@@ -46,9 +46,11 @@ foreach ($rows as $row) {
 function AHP_get_relkriteria()
 {
     global $db;
+    global $PERIODE;
     $data = array();
     $rows = $db->get_results("SELECT k.nama_kriteria, rk.ID1, rk.ID2, nilai 
-        FROM tb_rel_kriteria rk INNER JOIN tb_kriteria k ON k.kode_kriteria=rk.ID1 
+        FROM tb_rel_kriteria rk INNER JOIN tb_kriteria k ON k.kode_kriteria=rk.ID1
+        where rk.tahun=$PERIODE 
         ORDER BY ID1, ID2");
     foreach ($rows as $row) {
         $data[$row->ID1][$row->ID2] = $row->nilai;
@@ -222,10 +224,12 @@ function AHP_get_rank($array)
 function TOPSIS_get_hasil_analisa()
 {
     global $db;
+    global $PERIODE;
     $rows = $db->get_results("SELECT a.kode_alternatif, k.kode_kriteria, ra.nilai
         FROM tb_alternatif a 
         	INNER JOIN tb_rel_alternatif ra ON ra.kode_alternatif=a.kode_alternatif
         	INNER JOIN tb_kriteria k ON k.kode_kriteria=ra.kode_kriteria
+        WHERE a.tahun = $PERIODE
         ORDER BY a.kode_alternatif, k.kode_kriteria");
     $data = array();
     foreach ($rows as $row) {

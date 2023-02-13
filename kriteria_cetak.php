@@ -1,4 +1,5 @@
 <h1>Kriteria</h1>
+<small>Periode <?= get('periode') ?></small>
 <table>
     <thead>
         <tr>
