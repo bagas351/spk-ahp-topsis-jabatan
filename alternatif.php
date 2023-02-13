@@ -6,7 +6,7 @@
         <form class="form-inline">
             <input type="hidden" name="m" value="alternatif" />
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Pencarian. . ." name="q" value="<?=$_GET['q']?>" />
+                <input class="form-control" type="text" placeholder="Pencarian. . ." name="q" value="<?= get('q') ?>" />
             </div>
             <div class="form-group">
                 <button class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
@@ -31,22 +31,22 @@
                 </tr>
             </thead>
             <?php
-            $q = esc_field($_GET['q']);
+            $q = esc_field(get('q'));
             $rows = $db->get_results("SELECT * FROM tb_alternatif WHERE nama_alternatif LIKE '%$q%' ORDER BY kode_alternatif");
-            $no=0;
+            $no = 0;
 
-            foreach($rows as $row):?>
-            <tr>
-                <td><?=++$no ?></td>
-                <td><?=$row->kode_alternatif?></td>
-                <td><?=$row->nama_alternatif?></td>
-                <td><?=$row->Jabatan?></td>
-                <td>
-                    <a class="btn btn-xs btn-warning" href="?m=alternatif_ubah&ID=<?=$row->kode_alternatif?>"><span class="glyphicon glyphicon-edit"></span></a>
-                    <a class="btn btn-xs btn-danger" href="aksi.php?act=alternatif_hapus&ID=<?=$row->kode_alternatif?>" onclick="return confirm('Hapus data?')"><span class="glyphicon glyphicon-trash"></span></a>
-                </td>
-            </tr>
-            <?php endforeach;?>
+            foreach ($rows as $row) : ?>
+                <tr>
+                    <td><?= ++$no ?></td>
+                    <td><?= $row->kode_alternatif ?></td>
+                    <td><?= $row->nama_alternatif ?></td>
+                    <td><?= $row->Jabatan ?></td>
+                    <td>
+                        <a class="btn btn-xs btn-warning" href="?m=alternatif_ubah&ID=<?= $row->kode_alternatif ?>"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a class="btn btn-xs btn-danger" href="aksi.php?act=alternatif_hapus&ID=<?= $row->kode_alternatif ?>" onclick="return confirm('Hapus data?')"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
         </table>
     </div>
 </div>

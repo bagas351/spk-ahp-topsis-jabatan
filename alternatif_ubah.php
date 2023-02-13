@@ -1,24 +1,24 @@
 <?php
-    $row = $db->get_row("SELECT * FROM tb_alternatif WHERE kode_alternatif='$_GET[ID]'"); 
+$row = $db->get_row("SELECT * FROM tb_alternatif WHERE kode_alternatif='" . get('ID') . "'");
 ?>
 <div class="page-header">
     <h1>Ubah Alternatif</h1>
 </div>
 <div class="row">
     <div class="col-sm-6">
-        <?php if($_POST) include'aksi.php'?>
+        <?php if ($_POST) include 'aksi.php' ?>
         <form method="post">
             <div class="form-group">
                 <label>Kode <span class="text-danger">*</span></label>
-                <input class="form-control" type="text" name="kode" readonly="readonly" value="<?=$row->kode_alternatif?>"/>
+                <input class="form-control" type="text" name="kode" readonly="readonly" value="<?= $row->kode_alternatif ?>" />
             </div>
             <div class="form-group">
                 <label>Nama Alternatif <span class="text-danger">*</span></label>
-                <input class="form-control" type="text" name="nama" value="<?=$row->nama_alternatif?>"/>
+                <input class="form-control" type="text" name="nama" value="<?= $row->nama_alternatif ?>" />
             </div>
             <div class="form-group">
                 <label>Jabatan</label>
-                <textarea class="form-control" name="Jabatan"><?=$row->Jabatan?></textarea>
+                <textarea class="form-control" name="Jabatan"><?= $row->Jabatan ?></textarea>
             </div>
             <div class="page-header">
                 <button class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Simpan</button>
