@@ -381,3 +381,20 @@ function post($key)
 {
     return isset($_POST[$key]) ? $_POST[$key] : null;
 }
+
+
+function isActive($name)
+{
+
+    if (is_array($name)) {
+        $result = false;
+        foreach ($name as $m) {
+            if ($m == get('m')) {
+                $result = true;
+            }
+        }
+        return  $result ?  'active'  : null;
+    }
+
+    return get('m') == $name ?  'active'  : null;
+}

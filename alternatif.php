@@ -1,5 +1,21 @@
 <div class="page-header">
     <h1>Alternatif</h1>
+    <form class="form-inline" action="" method="get">
+        <?php
+        $periodes = $db->get_results("SELECT * FROM tb_periode ORDER BY tahun");
+        ?>
+        <input type="hidden" name="m" value="<?= get('m') ?>">
+        <div class="form-group">
+            <select class="form-control" name="periode">
+                <?php foreach ($periodes as $periode) { ?>
+                    <option value="<?= $periode->tahun ?>" <?= $periode->tahun == get('periode') ? 'selected' : '' ?>><?= $periode->nama ?></option>
+                <?php } ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-list-alt"></span> Set Peride</button>
+        </div>
+    </form>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">

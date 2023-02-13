@@ -154,3 +154,35 @@ else if ($mod == 'rel_kriteria') {
         print_msg("Nilai kriteria berhasil diubah.", 'success');
     }
 }
+
+/** PERIODE */
+elseif ($mod == 'periode_tambah') {
+    $tahun = $_POST['tahun'];
+    $nama = $_POST['nama'];
+    $keterangan = $_POST['keterangan'];
+
+    if ($tahun == '' || $nama == '')
+        print_msg("Field bertanda * tidak boleh kosong!");
+    elseif ($db->get_results("SELECT * FROM tb_periode WHERE tahun='$tahun'"))
+        print_msg("Tahun sudah ada!");
+    else {
+        $db->query("INSERT INTO tb_periode (tahun, nama, keterangan) VALUES ('$tahun', '$nama', '$keterangan')");
+        redirect_js("index.php?m=periode");
+    }
+} else if ($mod == 'periode_ubah') {
+    $tahun = $_POST['tahun'];
+    $nama = $_POST['nama'];
+    $keterangan = $_POST['keterangan'];
+
+    if ($tahun == '' || $nama == '')
+        print_msg("Field bertanda * tidak boleh kosong!");
+    elseif ($db->get_results("SELECT * FROM tb_periode WHERE tahun='$tahun' AND tahun<>'" . get('ID') . "'"))
+        print_msg("Tahun sudah ada!");
+    else {
+        $db->query("UPDATE tb_periode SET tahun='$tahun', nama='$nama', keterangan='$keterangan' WHERE tahun='" . get('ID') . "'");
+        redirect_js("index.php?m=periode");
+    }
+} else if ($act == 'periode_hapus') {
+    $db->query("DELETE FROM tb_periode WHERE tahun='" . get('ID') . "'");
+    header("location:index.php?m=periode");
+}
